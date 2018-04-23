@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>字母喷泉</title>
+    <style>
+        *{margin: 0;height: 0;}
+        #box{width: 500px;height: 500px;margin: 30px auto;background: #000;position: relative;}
+        p{position: absolute;width: 10px;height: 10px;margin-left: -5px;z-index: 2;color: #fff;font-size: 10px;text-align: center;line-height: 10px;}
+    </style>
+</head>
+<body>
+    <botton id="start">开始</botton>
+    <botton id="end">结束</botton>
+    <div id="box"></div>
+    <script>
+        var box = document.getElementById('box');
+        var Init = function(dom){
+            var p = document.createElement('p');
+            p.innerHTML = this.Word();
+            dom.appendChild(p);
+            p.style.bottom = 0+'px';
+            p.style.left = 50+"%";
+            this.Sport(p);
+        }
+        Init.prototype.Word = function(){
+            var a = parseInt(65+Math.random()*26)
+            return String.fromCharCode(a)
+        }
+        Init.prototype.Sport=function(obj){
+            var timer = null;
+            var speed = 1+parseInt(Math.random()*20);
+            var rspeed = parseInt(-5+Math.random()*20)
+            timer = setInterval(function(){
+                if(obj.offsetTop<=0||obj.offsetLeft<=0||obj.offsetLeft>=500){
+                    obj.parentNode.removeChild(obj)
+                    clearInterval(timer)
+                }else{
+                    speed++
+                    if(rspeed>0){
+                        rspeed++;
+                    }else{
+                        rspeed--;
+                    }
+                    obj.style.top = obj.offsetTop-speed+'px';
+                    obj.style.left = obj.offsetLeft+rspeed+'px';
+                }
+            },50)
+        }
+        var start = document.getElementById('start')
+        var end = document.getElementById('end')
+        var timer = null;
+        start.onclick = function(){
+            timer = setInterval(function(){
+                new Init(box);
+            },10)
+        }
+        end.onclick = function(){
+            clearInterval(timer)
+        }
+            
+
+            
+
+        
+
+        // Init.prototype.Sport = function(){
+        //     var timer = null;
+        //     setInterval(function() {
+
+        //     })
+        // }
+    </script>
+</body>
+</html>
